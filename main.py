@@ -19,38 +19,36 @@ class AutoRecallPlugin(Star):
     async def on_message(self, event: AstrMessageEvent):
         message_obj = event.message_obj
 
-        # 只处理机器人自己发送的消息
         if message_obj.self_id != message_obj.sender.user_id:
             return
 
-        # ---------- 群白名单检查 ----------
-        group_id = None
-        if hasattr(message_obj, 'group_id'):
-            group_id = str(message_obj.group_id)
-        # 有些平台 group_id 可能在 event 上
-        if not group_id and hasattr(event, 'group_id'):
-            group_id = str(event.group_id)
-
-        whitelist = self.config.get('group_whitelist', [])
-        if whitelist:
-            # 有白名单，但当前消息不是群消息，直接忽略
-            if not group_id:
-                return
-            # 是群消息但不在白名单里，也忽略
-            if group_id not in [str(g) for g in whitelist]:
+        # ---------- 群白名单检查（从逗号分隔字符串解析）----------
+        whitelist_str = self.config.get('group_whitelist', '')
+        if whitelist_str.strip():
+            whitelist = [x.strip() for x in whitelist_str.split(',') if x.strip()]
+            group_id = None
+            if hasattr(message_obj, 'group_id'):
+                group_id = str(message_obj.group_id)
+            if not group_id and hasattr(event, 'group_id'):
+                group_id = str(event.group_id)
+            if not group_id or group_id not in whitelist:
                 return
 
         # ---------- 关键词检查 ----------
-        keywords = self.config.get('keywords', [])
-        if keywords:
-            # 获取消息文本
+        keywords_str = self.config.get('keywords', '')
+        if keywords_str.strip():
+            keywords = [x.strip() for x in keywords_str.split(',') if x.strip()]
             msg_text = message_obj.get_plain_text() if hasattr(message_obj, 'get_plain_text') else getattr(message_obj, 'message', '')
-            if not any(keyword in msg_text for keyword in keywords):
-                # 没有包含任何一个关键词，不撤回
+            if not any(kw in msg_text for kw in keywords):
                 return
 
-        # ---------- 执行撤回 ----------
-        delay = self.config.get('recall_delay', 0.1)
+        # ---------- 撤回延迟 ----------
+        delay_str = self.config.get('recall_delay', '0.1')
+        try:
+            delay = float(delay_str)
+        except:
+            delay = 0.1
+
         try:
             await asyncio.sleep(delay)
             await event.recall_message()
