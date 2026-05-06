@@ -1,17 +1,17 @@
-name: astrbot_plugin_auto_recall # 插件名，需与目录名一致
-desc: 一个自动撤回机器人自身消息的插件 # 简短描述
-author: L1uStark
-version: 1.0.0 # 插件版本号
+name: astrbot_plugin_auto_recall
+desc: 自动撤回机器人自身消息，支持撤回延迟、关键词过滤和群白名单
+author:L1uStark
+version: 1.1.0
 config:
-  recall_delay:
+  - name: recall_delay
     type: float
-    default: 0.1
-    desc: 撤回延迟（秒）
-  keywords:
+    default: 10
+    desc: 撤回前等待的秒数
+  - name: keywords
     type: list
     default: []
-    desc: 关键词列表，仅当消息包含关键词时才撤回（空列表表示所有消息都撤回）
-  group_whitelist:
+    desc: 触发撤回的关键词列表，空列表表示所有消息都撤回
+  - name: group_whitelist
     type: list
     default: []
-    desc: 群白名单，仅在这些群中启用撤回功能（空列表表示所有群）
+    desc: 启用撤回的群号白名单，空列表表示所有群和私聊均生效
