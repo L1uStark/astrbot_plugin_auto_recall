@@ -2,7 +2,7 @@
     "recall_time": {
         "description": "撤回延迟（秒）",
         "type": "float",
-        "default": 0.5,
+        "default": 5,
         "hint": "消息发送后延迟多久进行撤回"
     },
     "group_whitelist": {
