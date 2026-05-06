@@ -1,0 +1,26 @@
+{
+    "recall_time": {
+        "description": "撤回延迟（秒）",
+        "type": "float",
+        "default": 0.5,
+        "hint": "消息发送后延迟多久进行撤回"
+    },
+    "group_whitelist": {
+        "description": "群白名单",
+        "type": "list",
+        "default": [],
+        "hint": "只在指定的群ID中生效，留空则对所有群生效"
+    },
+    "recall_words": {
+        "description": "撤回关键词",
+        "type": "list",
+        "default": [],
+        "hint": "包含这些关键词的消息将被撤回，留空则不限"
+    },
+    "max_plain_len": {
+        "description": "最大文本长度",
+        "type": "int",
+        "default": 0,
+        "hint": "消息纯文本超过此长度将被撤回，0表示不限"
+    }
+}
