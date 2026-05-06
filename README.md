@@ -1,14 +1,49 @@
-# astrbot-plugin-helloworld
+#  AstrBot 自动撤回插件
 
-AstrBot 插件模板 / A template plugin for AstrBot plugin feature
+自动撤回机器人自身发送的消息，支持延迟撤回、关键词过滤和群白名单。
 
-> [!NOTE]
-> This repo is just a template of [AstrBot](https://github.com/AstrBotDevs/AstrBot) Plugin.
-> 
-> [AstrBot](https://github.com/AstrBotDevs/AstrBot) is an agentic assistant for both personal and group conversations. It can be deployed across dozens of mainstream instant messaging platforms, including QQ, Telegram, Feishu, DingTalk, Slack, LINE, Discord, Matrix, etc. In addition, it provides a reliable and extensible conversational AI infrastructure for individuals, developers, and teams. Whether you need a personal AI companion, an intelligent customer support agent, an automation assistant, or an enterprise knowledge base, AstrBot enables you to quickly build AI applications directly within your existing messaging workflows.
+## ✨ 功能
 
-# Supports
+- 自动识别并撤回机器人自己的消息
+- 可设置撤回延迟（默认 0.1 秒）
+- 支持关键词过滤：只有包含指定关键词的消息才会被撤回
+- 支持群白名单：仅在特定群中生效
+- 通过 WebUI 可直接修改配置，无需编辑文件
 
-- [AstrBot Repo](https://github.com/AstrBotDevs/AstrBot)
-- [AstrBot Plugin Development Docs (Chinese)](https://docs.astrbot.app/dev/star/plugin-new.html)
-- [AstrBot Plugin Development Docs (English)](https://docs.astrbot.app/en/dev/star/plugin-new.html)
+## 📦 安装
+
+1. 将本插件文件夹放到 AstrBot 的 `data/plugins` 目录下
+2. 在 AstrBot WebUI 的「插件」页面找到 `astrbot_plugin_auto_recall` 并启用
+3. 点击插件卡片右上角 `...` → `设置` 即可调整参数
+
+## ⚙️ 配置说明
+
+| 配置项 | 类型 | 默认值 | 说明 |
+|--------|------|--------|------|
+| `recall_delay` | float | 0.1 | 撤回前等待的秒数，可设为 0 立即撤回 |
+| `keywords` | list | `[]` | 关键词列表，消息包含任意一个即撤回；为空则撤回所有消息 |
+| `group_whitelist` | list | `[]` | 群白名单，仅在这些群中生效；为空则对所有群和私聊生效 |
+
+> 💡 如果设置了群白名单，私聊消息将不会被撤回（除非将私聊对应的 ID 加入白名单）。
+
+## 🧪 示例
+
+- 只想在群 `123456789` 中撤回机器人的消息 → 设置 `group_whitelist` 为 `["123456789"]`
+- 只想撤回包含“广告”或“链接”的消息 → 设置 `keywords` 为 `["广告", "链接"]`
+- 发消息后 10 秒再撤回 → 设置 `recall_delay` 为 `10`
+
+## 📁 依赖
+
+无额外依赖，使用 AstrBot 内置 API。
+
+## 📝 版本
+
+v1.1.0 - 增加配置项，支持关键词、群白名单和撤回延迟
+
+## 👤 作者
+
+L1uStark
+
+## 🐋 特别鸣谢
+
+感谢 DeepSeek-V4-Pro 的特别赞助，代码全程由鲸鱼姐姐协助完成。
