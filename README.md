@@ -15,7 +15,7 @@
 
 1. 将本插件文件夹放入 `AstrBot/data/plugins/` 下
 2. 重启 AstrBot 或在 WebUI 插件页面启用 `astrbot_plugin_auto_recall`
-3. 点击插件右上角 `···` → `设置` 调整参数
+3. 点击插件 `⚙` →  即可调整参数
 
 ## ⚙️ 配置说明
 
