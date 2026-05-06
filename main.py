@@ -1,9 +1,10 @@
 import asyncio
-from astrbot.api.event import filter, AstrMessageEvent, EventMessageType
+from astrbot.api.event import filter, AstrMessageEvent
+from astrbot.api.event.filter import EventMessageType
 from astrbot.api.star import Context, Star, register
 from astrbot.api import logger
 
-@register("astrbot_plugin_auto_recall", "L1uStark", "一个自动撤回机器人自身消息的插件", "1.0.0")
+@register("astrbot_plugin_auto_recall", "YourName", "一个自动撤回机器人自身消息的插件", "1.0.0")
 class AutoRecallPlugin(Star):
     def __init__(self, context: Context):
         super().__init__(context)
